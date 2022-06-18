@@ -37,7 +37,7 @@ const GetKtob = async (req, res) =>
                     authorName : ${getAuthor.authorName}`
             );
         }
-
+        
         res.status(200).json(getKtobb);
     }
     catch(err)
@@ -67,7 +67,7 @@ const CreateKtob = async (req, res) =>
 {
     const newKteb = new ktobModels({
         title : req.body.title,
-        description : req.body.decsription,
+        decsrip : req.body.decsrip,
         releaseDate : req.body.releaseDate,
         authorId : req.body.authorId
     });
@@ -83,7 +83,67 @@ const CreateKtob = async (req, res) =>
     }
 };
 
+const DeleteKteb = async (req, res) =>
+{
+    const id = req.params.idKteb;
+    try
+    {
+        const delKteb = await ktobModels.findByIdAndDelete(id);
+        res.status(200).json(delKteb);
+    }
+    catch(err)
+    {
+        res.status(500).json(err);
+    }
+}
+
+const DeleteAuthor = async (req, res) =>
+{
+    const id = req.params.idAuthor;
+    try
+    {
+        const delAuthor = await author.findByIdAndDelete(id);
+        res.status(200).json(delAuthor);
+    }
+    catch(err)
+    {
+        res.status(500).json(err);
+    }
+}
+
+const UpdateKteb = async (req, res) =>
+{
+    const id = req.params.idKteb;
+    try
+    {
+        const upKteb = await ktobModels.findByIdAndUpdate(id, req.body, { new: true });
+        res.status(200).json(upKteb);
+    }
+    catch(err)
+    {
+        res.status(500).json(err);
+    }
+}
+
+const UpdateAuthor = async (req, res) =>
+{
+    const id = req.params.idAuthor;
+    try
+    {
+        const upAuthor = await author.findByIdAndUpdate(id, req.body, { new: true });
+        res.status(200).json(upAuthor);
+    }
+    catch(err)
+    {
+        res.status(500).json(err);
+    }
+}
+
 module.exports.CreateKtob = CreateKtob;
 module.exports.CreateAuthor = CreateAuthor;
 module.exports.GetKteb = GetKteb;
 module.exports.GetKtob = GetKtob;
+module.exports.DeleteKteb = DeleteKteb;
+module.exports.DeleteAuthor = DeleteAuthor;
+module.exports.UpdateKteb = UpdateKteb;
+module.exports.UpdateAuthor = UpdateAuthor;
